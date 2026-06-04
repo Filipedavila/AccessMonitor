@@ -2,14 +2,23 @@ import axios from "axios";
 
 import dataJSON from '../utils/data.json'
 
-const baseURLEnv = process.env.REACT_APP_AMP_SERVER;
+const configs = await loadConfig();
+
+
+export async function loadConfig(){
+  const response = await fetch('/config.json');
+  if (!response.ok) {
+    throw new Error('Failed to load runtime configuration');
+  }
+  return response.json();
+}
 
 export const api = axios.create({
-  baseURL: baseURLPPR,
+  baseURL: configs.REACT_APP_AMP_SERVER,
 });
 
 export const getEvalData = async (content, currentURL) => {
-  if (process.env.REACT_APP_API_DATA_SOURCE === "local") {
+  if (configs.REACT_APP_API_DATA_SOURCE === "local") {
     return await getEvalDataByLocal(content, currentURL);
   }
   return await getEvalDataByAPI(content, currentURL);

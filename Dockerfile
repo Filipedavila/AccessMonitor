@@ -48,5 +48,22 @@ WORKDIR /usr/local/apache2/htdocs/
 COPY --from=builder /app/build /usr/local/apache2/htdocs
 COPY --from=builder /app/.htaccess /usr/local/apache2/htdocs
 
-
+RUN printf '%s\n' \
+    '#!/bin/sh' \
+    'TARGET_FILE="/usr/local/apache2/htdocs/config.json"' \
+    'echo "=== Generating Runtime Configuration ==="' \
+    'cat << EOF > "$TARGET_FILE"' \
+    '{' \
+    '  "NODE_ENV": "${NODE_ENV:-production}",' \
+    '  "REACT_APP_AMP_SERVER": "${REACT_APP_AMP_SERVER}",' \
+    '  "REACT_APP_BASE_URL": "${REACT_APP_BASE_URL:-/}",' \
+    '  "REACT_APP_SERVER_URL": "${REACT_APP_SERVER_URL:-/}",' \
+    '  "REACT_APP_API_DATA_SOURCE": "${REACT_APP_API_DATA_SOURCE:-remote}"' \
+    '}' \
+    'EOF' \
+    'echo "=== Configuration generated ==="' \
+    'exec "$@"' > /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 EXPOSE 80
+CMD ["httpd-foreground"]

@@ -15,9 +15,23 @@
   min-width: 160px;
 }
 
+.input-group .btn {
+  transition:
+    background-color var(--transition-base),
+    color var(--transition-base),
+    transform var(--transition-fast),
+    box-shadow var(--transition-base);
+}
+
 .input-group .btn:hover {
   background-color: var(--ama-color-background-white);
   color: var(--ama-color-brand-primary);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.input-group .btn:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .input-group input {
@@ -36,7 +50,7 @@
   margin: 0;
 }
 
-input[type=file] {
+input[type='file'] {
   margin-bottom: 0px;
   padding-left: 0px;
   margin-left: 30px !important;

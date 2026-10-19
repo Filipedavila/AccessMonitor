@@ -9,11 +9,21 @@
   padding: 3rem 0px 2rem 0px;
 }
 
-/* Header com sombra suave */
+/* Header com sombra suave e efeito glass */
 header,
 .header {
   box-shadow: var(--shadow-sm);
-  transition: box-shadow var(--transition-base);
+  transition:
+    box-shadow var(--transition-base),
+    background-color var(--transition-base),
+    backdrop-filter var(--transition-base);
+  backdrop-filter: saturate(140%);
+  -webkit-backdrop-filter: saturate(140%);
+}
+
+header:hover,
+.header:hover {
+  box-shadow: var(--shadow-md);
 }
 
 /* Breadcrumb moderno */
@@ -23,7 +33,13 @@ header,
 }
 
 .breadcrumb-item a {
-  transition: color var(--transition-fast);
+  transition:
+    color var(--transition-fast),
+    opacity var(--transition-fast);
+}
+
+.breadcrumb-item a:hover {
+  opacity: 0.85;
 }
 
 /* DARK */

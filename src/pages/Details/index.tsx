@@ -14,7 +14,6 @@ import { pathURL } from '../../App';
 import type { AssertionEvidenceItem, EvaluationData } from '../../types';
 
 interface DetailsProps {
-  allData: EvaluationData | null;
   setAllData: (data: EvaluationData) => void;
 }
 
@@ -25,10 +24,7 @@ interface RulesetEntry {
 
 const typedRuleset = ruleset as unknown as Record<string, RulesetEntry>;
 
-export default function Details({
-  allData,
-  setAllData,
-}: DetailsProps): JSX.Element {
+export default function Details({ setAllData }: DetailsProps): JSX.Element {
   const location = useLocation();
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -52,8 +48,7 @@ export default function Details({
     contentHtml ?? '',
     decodedUrl,
   );
-
-  const url = dataProcess?.metadata?.url ?? allData?.rawUrl;
+  const url = dataProcess?.metadata?.url;
 
   const handleGoBack = (): void => {
     if (isHtml) {
@@ -102,13 +97,9 @@ export default function Details({
     { title: 'Access Monitor', href: `${pathURL}` },
     { title: url || 'html', href: '' },
     {
-      title: (
-        <span
-          dangerouslySetInnerHTML={{
-            __html: testResult.replace('{{value}}', String(occurrences)),
-          }}
-        />
-      ),
+      title: testResult
+        .replace('{{value}}', String(occurrences))
+        .replace(/<[^>]*>/g, ''),
       href: '#',
     },
   ];
@@ -125,9 +116,15 @@ export default function Details({
     }
 
     const testKey = testName ?? details;
-    const items =
-      originalData.evaluationReport?.scoring?.assertionEvidence?.[testKey] ??
-      [];
+    if (!testKey) {
+      setEvidence([]);
+      return;
+    }
+    const items: AssertionEvidenceItem[] = [
+      ...(originalData.evaluationReport?.scoring?.assertionEvidence?.[
+        testKey
+      ] ?? []),
+    ];
     setEvidence(items);
   }, [originalData, details, testName, setAllData]);
 

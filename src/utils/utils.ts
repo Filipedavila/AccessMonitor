@@ -45,7 +45,7 @@ export function convertBytes(length: number) {
 export function downloadCSV(dataProcess: any, originalData: any, t: any) {
   const data = [];
 
-  let error, level, sc, desc, num;
+  let error, level, desc, num;
   const descs = [
     'CSV.date',
     'CSV.errorType',
@@ -73,8 +73,8 @@ export function downloadCSV(dataProcess: any, originalData: any, t: any) {
         'TESTS_RESULTS.' +
         dataProcess['results'][row]['msg'] +
         (num === 1 ? '.s' : '.p');
-      sc =
-        ruleset[dataProcess['results'][row]['msg']]?.['scs']?.join(' ') || '';
+      const key = String(dataProcess['results'][row]['msg']);
+      const sc = ruleset[key as keyof typeof ruleset]?.['scs']?.join(' ') || '';
 
       descs.push(desc, error);
       rowData.push(

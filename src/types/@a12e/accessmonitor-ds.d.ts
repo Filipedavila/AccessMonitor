@@ -99,7 +99,7 @@ declare module '@a12e/accessmonitor-ds' {
   export interface BreadcrumbProps {
     data: BreadcrumbItem[];
     darkTheme?: string;
-    tagHere: string;
+    tagHere?: string;
     onClick?: (
       item: BreadcrumbItem,
       event: MouseEvent<HTMLAnchorElement>,
@@ -113,7 +113,9 @@ declare module '@a12e/accessmonitor-ds' {
     label: string;
     placeholder?: string;
     type?: string;
+    error?: string;
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+    onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
   }
   export function Input(props: InputProps): ReactNode;
 
@@ -148,15 +150,21 @@ declare module '@a12e/accessmonitor-ds' {
     text: string;
     size?: string;
     id?: string;
+    disabled?: boolean;
+    variant?: string;
+    type?: string;
     onClick?: () => void;
     iconRight?: ReactNode;
+    iconLeft?: ReactNode;
+    download?: string;
   }
   export function Button(props: ButtonProps): ReactNode;
 
   export interface HeaderProps {
     description: ReactNode;
-    title: string;
+    title?: string;
     title2?: string;
+    logo?: ReactNode;
     darkTheme?: string;
     homePage?: boolean;
     language: string;
@@ -165,6 +173,7 @@ declare module '@a12e/accessmonitor-ds' {
     linkTo: string;
     ariaLabel: string;
     obsSpecial?: boolean;
+    altLogo?: string;
   }
   export function Header(props: HeaderProps): ReactNode;
 
@@ -172,4 +181,84 @@ declare module '@a12e/accessmonitor-ds' {
     darkTheme?: string;
   }
   export function Footer(props: FooterProps): ReactNode;
+
+  export interface GaugeProps {
+    darkTheme?: string;
+    percentage: number | string;
+    title?: string | ReactNode;
+    screenReaderTitle?: string;
+    type?: string;
+  }
+  export function Gauge(props: GaugeProps): ReactNode;
+
+  export interface StatsTableProps {
+    darkTheme?: string;
+    data?: {
+      data?: {
+        metadata?: {
+          count_results?: number;
+        };
+        infoak?: {
+          A?: AccessibilityLevel;
+          AA?: AccessibilityLevel;
+          AAA?: AccessibilityLevel;
+        };
+      };
+    };
+    ok: string;
+    warning: string;
+    error: string;
+    title?: string;
+    caption?: string;
+    type?: string;
+  }
+
+  export interface AccessibilityLevel {
+    ok?: number;
+    war?: number;
+    err?: number;
+  }
+  export function StatsTable(props: StatsTableProps): ReactNode;
+
+  export interface TableOption {
+    id: string;
+    iconName: string;
+    tdClassName?: string;
+    lvl?: string | number;
+    ele?: unknown;
+  }
+
+  export interface TableComponentProps {
+    darkTheme?: string;
+    data?: TableOption[] | AccordionOption[];
+    onClick: (element: any) => void;
+    caption?: string;
+    col1?: string;
+    col2?: string;
+    col3?: string;
+    lvlTitle?: string;
+    ariaLabel?: string;
+    headingLevel?: string;
+    imageTitlesCallback: (iconName: string) => string;
+    ariaLabels: Record<string, string>;
+  }
+  export function TableComponent(props: TableComponentProps): ReactNode;
+  export interface AccordionOption {
+    id: string;
+    lvl: Level;
+    cs: string[] | null;
+    iconName: string;
+    tdClassName: string;
+    ele?: string;
+    title: ReactNode;
+    ref_website: string;
+    component: ReactNode;
+  }
+
+  export interface AccordionProps {
+    options: AccordionOption[];
+    table?: boolean;
+    flush?: boolean;
+  }
+  export function Accordion(props: AccordionProps): ReactNode;
 }

@@ -14,6 +14,7 @@ import { downloadCSV } from '../../utils/utils';
 import LZString from 'lz-string';
 
 import { pathURL } from '../../App';
+import { EvaluationResponse, ProcessedDataFull } from '@/types';
 
 interface PageCodeLocationState {
   content?: ProcessedDataFull | null;

@@ -25,7 +25,7 @@ import type { EvaluationData } from './types';
 export const pathURL: string = import.meta.env.VITE_BASE_URL || '/';
 
 export const App: FC = () => {
-  const [allData, setAllData] = useState<EvaluationData | null>(null);
+  const [, setAllData] = useState<EvaluationData | null>(null);
   const [, setEle] = useState<string>('');
 
   /* Update year in footer until dynamic year is implemented in design system */
@@ -54,7 +54,7 @@ export const App: FC = () => {
 
               <Route
                 path={`${pathURL}results/:content/:details`}
-                element={<Detail setAllData={setAllData} allData={allData} />}
+                element={<Detail setAllData={setAllData} />}
               />
 
               <Route

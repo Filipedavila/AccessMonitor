@@ -1,7 +1,11 @@
 import axios from 'axios';
 import type { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import dataJSON from '../utils/data.json';
-import type { AppConfig, EvaluationResponse } from '../types';
+import type { EvaluationResponse } from '../types/report';
+export interface AppConfig {
+  REACT_APP_AMP_SERVER: string;
+  REACT_APP_API_DATA_SOURCE: string;
+}
 
 let cachedConfig: AppConfig | null = null;
 

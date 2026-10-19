@@ -1,7 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode, FC } from 'react';
 import type { Theme } from '../types';
-
 export interface ThemeContextType {
   theme: Theme;
   toggleTheme: () => void;

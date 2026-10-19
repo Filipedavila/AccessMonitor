@@ -1,7 +1,6 @@
 import type { JSX } from 'react';
 import type { TFunction } from 'i18next';
 import type {
-  AccordionOption,
   Level,
   ProcessedDataFull,
   SuccessCriterion,
@@ -9,6 +8,7 @@ import type {
   TestResult,
   TestViewItem,
 } from '../../types';
+import { AccordionOption } from '@a12e/accessmonitor-ds';
 
 export function refWebsite(ref: string): string {
   let result: string;

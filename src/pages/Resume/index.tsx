@@ -14,11 +14,7 @@ import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { downloadCSV } from '../../utils/utils';
 import { useTheme } from '../../context/ThemeContext';
-import {
-  optionForAccordion,
-  callbackImgT,
-  calculateTotalElements,
-} from './utils';
+import { optionForAccordion, callbackImgT } from './utils';
 import './styles.css';
 
 import { pathURL } from '../../App';

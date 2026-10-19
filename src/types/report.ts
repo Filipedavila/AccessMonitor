@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 export interface ElementDetails {
   readonly htmlCode: string;
   readonly pointer: string;
@@ -109,4 +111,58 @@ export interface ProcessedDataFull {
   };
   readonly results: TestResult[];
   readonly infoak: Record<Level, Record<TestColor, number>>;
+}
+
+export type TestResultCode = 'G' | 'Y' | 'R';
+
+export interface ElementData {
+  ele: string;
+  code: string;
+  showCode?: string;
+  pointer?: string | number;
+}
+
+export interface NodeElement {
+  htmlCode: string;
+  attributes?: string;
+  pointer?: string | number;
+}
+
+export interface Node {
+  htmlCode?: string;
+  attributes?: string;
+  pointer?: string | number;
+  elements?: NodeElement[];
+}
+
+export interface NodeWithElements extends Node {
+  elements: NodeElement[];
+}
+
+export interface RelatedSuccessCriterion {
+  sc: string;
+  lvl: string;
+  link: string;
+}
+
+export interface ProcessedTestResult {
+  ico: string;
+  color: 'ok' | 'err' | 'war';
+  lvl: string;
+  msg: string;
+  ref: string;
+  ref_website: string;
+  relation: 'relationT' | 'relationACT';
+  ref_related_sc: RelatedSuccessCriterion[];
+  value: unknown;
+  prio: number;
+  tech_list: ReactNode;
+}
+
+export interface TestResultsData {
+  type: 'html';
+  result: TestResultCode;
+  elements: ElementData[];
+  size: number;
+  finalUrl?: string;
 }

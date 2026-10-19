@@ -64,7 +64,7 @@
       "header": "Obtenha um relatório de acessibilidade através de um dos seguintes métodos",
       "intro_text": "A sua página Web é acessível?",
       "intro_text_content": "Obtenha um relatório de acessibilidade através de um dos seguintes métodos:",
-      "intro_img_text": "imagem de verificação", 
+      "intro_img_text": "imagem de verificação",
       "tabs": {
         "url": "Inserir URL",
         "input": "Inserir código HTML",
@@ -235,6 +235,13 @@
       "messages": {
         "data_error": "Ocorreu um erro ao obter os dados",
         "data_table_error": "Ocorreu um erro ao tentar carregar a tabela de dados"
+      },
+      "errors": {
+        "network": "Não foi possível contactar o servidor de avaliação. Verifique a sua ligação e tente novamente.",
+        "parse": "Não foi possível ler a resposta do servidor. Tente novamente mais tarde.",
+        "invalid_url": "O url inserido é inválido ou não existe.",
+        "server": "O servidor de avaliação devolveu um erro. Tente novamente mais tarde.",
+        "unexpected": "Ocorreu um erro inesperado. Por favor tente aceder mais tarde."
       }
     },
     "CSV": {

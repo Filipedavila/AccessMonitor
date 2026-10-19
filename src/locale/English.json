@@ -55,9 +55,9 @@
           "link4": "Declaration of accessibility and usability",
           "link5": "Badge requirements"
         },
-          "youarehere": "you are here",
-          "open_dropdown": "press to expand our list of applications and websites",
-          "close_dropdown": "press to compress our list of applications and websites"
+        "youarehere": "you are here",
+        "open_dropdown": "press to expand our list of applications and websites",
+        "close_dropdown": "press to compress our list of applications and websites"
       }
     },
     "HOME_PAGE": {
@@ -146,11 +146,11 @@
         "alt_rowwar": "To view manually:",
         "alt_rowok": "Acceptable:",
         "alt_see": "See results from the practice:",
-        "alt_passed":"Acceptable practice",
-        "alt_failed":"Non acceptable practice",
-        "alt_warning":"Practice to view manually",
-        "alt_information":"press for more information",
-        "alt_more_information":"press for less information",
+        "alt_passed": "Acceptable practice",
+        "alt_failed": "Non acceptable practice",
+        "alt_warning": "Practice to view manually",
+        "alt_information": "press for more information",
+        "alt_more_information": "press for less information",
         "image_title": {
           "AMA-Check-Line": "Acceptable practice",
           "AMA-Wrong-Line": "Non acceptable practice",
@@ -236,6 +236,13 @@
       "messages": {
         "data_error": "An error has ocurred while trying to retrieve user data",
         "data_table_error": "An error has ocurred when trying to load the data table"
+      },
+      "errors": {
+        "network": "We could not reach the evaluation server. Please check your connection and try again.",
+        "parse": "The server response could not be read. Please try again later.",
+        "invalid_url": "The given url is invalid or does not exist.",
+        "server": "The evaluation server returned an error. Please try again later.",
+        "unexpected": "An unexpected error has ocurred. Please try again later."
       }
     },
     "CSV": {

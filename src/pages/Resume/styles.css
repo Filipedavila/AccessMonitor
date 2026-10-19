@@ -21,7 +21,7 @@
   font-size: 2.6em;
   color: var(--ama-color-text-gray);
   font-weight: 900;
-  font-family: "Lato";
+  font-family: 'Lato';
   margin-top: 0.25em;
   margin-bottom: 0.25em;
   word-break: break-all;
@@ -33,7 +33,7 @@
   font-size: 2em;
   color: var(--ama-color-text-gray);
   font-weight: 700;
-  font-family: "Lato";
+  font-family: 'Lato';
   margin-top: 0;
   margin-bottom: 2em !important;
 }
@@ -44,11 +44,14 @@
   background-color: var(--surface-light);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
-  transition: box-shadow var(--transition-base);
+  transition:
+    box-shadow var(--transition-base),
+    transform var(--transition-base);
 }
 
 .sumary_container:hover {
   box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
 .chart_container {
@@ -106,6 +109,13 @@
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
   margin-top: 1.5rem;
+  transition:
+    box-shadow var(--transition-base),
+    transform var(--transition-base);
+}
+
+.avaliation_container:hover {
+  box-shadow: var(--shadow-md);
 }
 
 .avaliation_title {
@@ -182,7 +192,7 @@
     padding: 5px 0;
     background-color: var(--ama-color-background-light-lighter) !important;
   }
-  
+
   .dark_mode-resume .mobile-row {
     background-color: var(--ama-color-background-light-lighter) !important;
   }

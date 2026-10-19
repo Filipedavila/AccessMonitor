@@ -26,6 +26,22 @@
 .secondGroupContainer button {
   width: 100%;
   font-size: 13.5px;
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-base),
+    background-color var(--transition-base),
+    color var(--transition-base);
+}
+
+.firstGroupContainer button:hover,
+.secondGroupContainer button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.firstGroupContainer button:active,
+.secondGroupContainer button:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .firstGroupContainer button:first-child,
@@ -52,7 +68,7 @@
 
 .dropdown-content a {
   color: var(--ama-color-background-white);
-  padding: .5em;
+  padding: 0.5em;
   text-decoration: none;
   font-weight: 700;
   cursor: pointer;
@@ -64,7 +80,7 @@
 }
 
 .dropdown-content li::marker {
-  content: "";
+  content: '';
 }
 
 .dropdown-content button {
@@ -77,7 +93,7 @@
   font-weight: bold;
   justify-content: space-between;
   align-items: center;
-  text-decoration: none !important;  
+  text-decoration: none !important;
 }
 
 .dropdown-content a span:hover,
@@ -87,7 +103,6 @@
 .open-webpage-text {
   color: white !important;
 }
-
 
 /* Dark Mode */
 .dark_mode-resume .deskGroup .ama.btn,
@@ -107,7 +122,7 @@
   color: var(--ama-color-background-dark-lighter) !important;
 }
 
-.dark_mode-resume  .ama.btn:hover,
+.dark_mode-resume .ama.btn:hover,
 .dark_mode-resume .group_mobile .ama.btn:hover {
   background-color: transparent !important;
   border-color: var(--ama-color-text-blue);
@@ -122,7 +137,6 @@
 .dark_mode-resume .other .ama.btn:not(:focus) {
   border-color: var(--ama-color-background-dark-lighter);
 }
-
 
 .dark_mode-resume .dropdown-content {
   width: fit-content;

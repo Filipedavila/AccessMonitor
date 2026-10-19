@@ -17,6 +17,19 @@ mark {
 
 .details-container .nav-tabs {
   margin-bottom: 0 !important;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.details-container .nav-tabs .nav-link {
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  font-weight: 600;
+  transition: background-color var(--transition-base),
+              color var(--transition-base),
+              border-color var(--transition-base);
+}
+
+.details-container .nav-tabs .nav-link.active {
+  border-bottom-width: 3px;
 }
 
 .error-cell,
@@ -45,6 +58,8 @@ mark {
 .tabContent_container-details {
   background: var(--ama-color-background-white);
   padding: 32px 48px;
+  border-radius: 0 var(--radius-lg) var(--radius-lg) var(--radius-lg);
+  box-shadow: var(--shadow-sm);
 }
 
 @media (max-width: 768px) {
@@ -94,6 +109,7 @@ mark {
 
 .dark_mode-details .tabContent_container-details {
   background-color: var(--ama-color-background-dark-lighter) !important;
+  box-shadow: var(--shadow-md);
 }
 
 .dark_mode-details .label {

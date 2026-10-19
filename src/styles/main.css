@@ -19,6 +19,78 @@ div#root {
     flex-direction: column;
 }
 
+/* Botões - aspeto moderno */
+.btn {
+  border-radius: var(--radius-md) !important;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  transition: transform var(--transition-fast),
+              box-shadow var(--transition-base),
+              background-color var(--transition-base),
+              color var(--transition-base),
+              border-color var(--transition-base);
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Inputs e textareas */
+.form-control,
+.form-select,
+textarea.form-control {
+  border-radius: var(--radius-md) !important;
+  border: 1px solid var(--border-subtle);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.form-control:focus,
+.form-select:focus,
+textarea.form-control:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(51, 51, 153, 0.15);
+}
+
+/* Cards genéricos */
+.card {
+  border-radius: var(--radius-lg) !important;
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-base), transform var(--transition-base);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* Tabelas */
+.table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.table thead th {
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+
+.table tbody tr {
+  transition: background-color var(--transition-fast);
+}
+
+/* Links */
+a {
+  transition: color var(--transition-fast);
+}
+
 /*TODO: Estilo para pular o erro de accessibilidade, remover até actualizar o design system */
 .skip-to-content-link {
   position: absolute;

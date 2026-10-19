@@ -9,6 +9,11 @@
 .container_error a {
     color: var(--ama-color-text-gray);
     text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.container_error a:hover {
+    color: var(--primary);
 }
 
 .container_error a span {

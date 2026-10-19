@@ -9,6 +9,23 @@
   padding: 3rem 0px 2rem 0px;
 }
 
+/* Header com sombra suave */
+header,
+.header {
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-base);
+}
+
+/* Breadcrumb moderno */
+.breadcrumb {
+  font-size: 0.9rem;
+  letter-spacing: 0.2px;
+}
+
+.breadcrumb-item a {
+  transition: color var(--transition-fast);
+}
+
 /* DARK */
 
 .main_dark {

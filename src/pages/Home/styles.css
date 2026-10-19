@@ -6,6 +6,10 @@
   padding: 62px 60px;
   display: grid;
   grid-template-columns: 70% 30%;
+  background-color: var(--surface-light);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  margin-top: 1rem;
 }
 
 .validator_container_description {
@@ -27,6 +31,20 @@
   min-width: 210px;
   height: 55px;
   line-height: normal;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  transition: background-color var(--transition-base),
+              color var(--transition-base),
+              border-color var(--transition-base);
+}
+
+.ama.tabs-container .nav-tabs {
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.ama.tabs-container .nav-tabs .nav-link.active {
+  border-bottom-width: 3px;
 }
 
 .link_breadcrumb_container .breadcrumb .breadcrumb-item:not(:first-child) {

@@ -41,6 +41,14 @@
 .sumary_container {
   margin: 40px 0;
   padding: 30px 60px;
+  background-color: var(--surface-light);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-base);
+}
+
+.sumary_container:hover {
+  box-shadow: var(--shadow-md);
 }
 
 .chart_container {
@@ -94,6 +102,10 @@
 
 .avaliation_container {
   padding: 30px 60px;
+  background-color: var(--surface-light);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  margin-top: 1.5rem;
 }
 
 .avaliation_title {
@@ -193,6 +205,11 @@
 .dark_mode-resume .sumary_container {
   background-color: var(--ama-color-background-dark-lighter) !important;
   color: var(--ama-color-background-white);
+  box-shadow: var(--shadow-md);
+}
+
+.dark_mode-resume .avaliation_container {
+  box-shadow: var(--shadow-md);
 }
 
 .dark_mode-resume .loading_container {

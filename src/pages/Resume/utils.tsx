@@ -4,6 +4,7 @@ import type {
   AccordionOption,
   Level,
   ProcessedDataFull,
+  SuccessCriterion,
   TestColor,
   TestResult,
   TestViewItem,
@@ -131,17 +132,23 @@ export function optionForAccordion(
 
       const sc_text =
         result.ref_related_sc && result.ref_related_sc.length > 0
-          ? result.ref_related_sc.map((item) => item.sc)
+          ? result.ref_related_sc.map(
+              (item: SuccessCriterion): string => item.sc,
+            )
           : null;
 
       const linkcs =
         result.ref_related_sc && result.ref_related_sc.length > 0
-          ? result.ref_related_sc.map((item) => item.link)
+          ? result.ref_related_sc.map(
+              (item: SuccessCriterion): string => item.link,
+            )
           : null;
 
       const sc_level =
         result.ref_related_sc && result.ref_related_sc.length > 0
-          ? result.ref_related_sc.map((item) => item.lvl)
+          ? result.ref_related_sc.map(
+              (item: SuccessCriterion): string => item.lvl,
+            )
           : null;
 
       const additionalInfo = t(`TXT_TECHNIQUES.${result.ref}`) || '';
@@ -188,7 +195,7 @@ export function optionForAccordion(
           <div className="criterio d-block">
             {sc_text && linkcs && sc_level && (
               <ul className="d-flex flex-column">
-                {sc_text.map((sc, index) => (
+                {sc_text.map((sc: string, index: number) => (
                   <li key={index}>
                     Critérios de sucesso: {sc}
                     <span>

@@ -52,7 +52,6 @@ export function ButtonsActions({
         <div className="d-flex flex-row gap-3 other">
           <Button
             size="md"
-            variant="secondary"
             text={t('RESULTS.actions.re_evaluate')}
             iconRight={<Icon name="AMA-Reload-Line" />}
             onClick={() => reRequest()}
@@ -62,7 +61,6 @@ export function ButtonsActions({
             <Button
               id="dropdownMenuButton"
               size="md"
-              variant="secondary"
               text={t('RESULTS.actions.see_page')}
               iconRight={
                 <Icon
@@ -98,7 +96,6 @@ export function ButtonsActions({
           <div>
             <Button
               size="md"
-              variant="secondary"
               text={t('RESULTS.actions.download')}
               iconRight={<Icon name="AMA-DownloadSetacurta-Line" />}
               onClick={downloadCSV}
@@ -121,7 +118,6 @@ export function ButtonsActions({
             <Button
               id="dropdownMenuButton"
               size="md"
-              variant="secondary"
               text={t('RESULTS.actions.see_page')}
               iconRight={
                 <Icon
@@ -156,7 +152,6 @@ export function ButtonsActions({
         <div className="secondGroupContainer">
           <Button
             size="md"
-            variant="secondary"
             text={t('RESULTS.actions.re_evaluate')}
             iconRight={<Icon name="AMA-Reload-Line" />}
             onClick={() => reRequest()}
@@ -165,7 +160,6 @@ export function ButtonsActions({
           <div>
             <Button
               size="md"
-              variant="secondary"
               text={t('RESULTS.actions.download')}
               iconRight={<Icon name="AMA-DownloadSetacurta-Line" />}
               onClick={downloadCSV}

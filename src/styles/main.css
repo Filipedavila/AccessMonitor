@@ -204,15 +204,29 @@ a:hover {
 .skeleton-text {
   display: inline-block;
   vertical-align: middle;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   background: linear-gradient(
     90deg,
-    rgba(0, 0, 0, 0.06) 25%,
-    rgba(0, 0, 0, 0.12) 37%,
-    rgba(0, 0, 0, 0.06) 63%
+    var(--skeleton-base) 25%,
+    var(--skeleton-highlight) 37%,
+    var(--skeleton-base) 63%
   );
   background-size: 400% 100%;
-  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+  animation: skeleton-shimmer var(--skeleton-duration) var(--ease-in-out) infinite;
+  will-change: background-position;
+}
+
+.skeleton-text.skeleton-circle {
+  border-radius: 50%;
+}
+
+.skeleton-text.skeleton-rect {
+  border-radius: var(--radius-md);
+}
+
+.skeleton-group {
+  display: flex;
+  flex-direction: column;
 }
 
 .dark_mode-resume .skeleton-text,
@@ -221,9 +235,9 @@ a:hover {
 .main_dark .skeleton-text {
   background: linear-gradient(
     90deg,
-    rgba(255, 255, 255, 0.08) 25%,
-    rgba(255, 255, 255, 0.18) 37%,
-    rgba(255, 255, 255, 0.08) 63%
+    var(--skeleton-base-dark) 25%,
+    var(--skeleton-highlight-dark) 37%,
+    var(--skeleton-base-dark) 63%
   );
   background-size: 400% 100%;
 }
@@ -237,8 +251,65 @@ a:hover {
   }
 }
 
+/* Utilitários de animação reutilizáveis */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up var(--transition-slow) var(--ease-out) both;
+}
+
+.animate-fade-in {
+  animation: fade-in var(--transition-base) var(--ease-out) both;
+}
+
+.animate-spin {
+  animation: spin 900ms linear infinite;
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 1.8s var(--ease-in-out) infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .skeleton-text {
+  .skeleton-text,
+  .animate-fade-in-up,
+  .animate-fade-in,
+  .animate-spin,
+  .animate-pulse-soft {
     animation: none;
   }
 }

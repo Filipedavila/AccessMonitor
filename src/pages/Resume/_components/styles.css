@@ -30,7 +30,8 @@
     transform var(--transition-fast),
     box-shadow var(--transition-base),
     background-color var(--transition-base),
-    color var(--transition-base);
+    color var(--transition-base),
+    border-color var(--transition-base);
 }
 
 .firstGroupContainer button:hover,

@@ -23,6 +23,21 @@
 .firstGroupContainer .ama.btn {
   width: 100%;
   font-size: 13.5px;
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-base),
+    background-color var(--transition-base),
+    color var(--transition-base),
+    border-color var(--transition-base);
+}
+
+.firstGroupContainer .ama.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.firstGroupContainer .ama.btn:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .firstGroupContainer .ama.btn:first-child {

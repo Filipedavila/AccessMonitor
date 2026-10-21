@@ -23,7 +23,11 @@ export function SkeletonText({
 }: SkeletonTextProps): JSX.Element {
   const baseClass = `skeleton-text skeleton-${variant} ${className}`.trim();
   const a11yProps = ariaLabel
-    ? { role: 'status' as const, 'aria-live': 'polite' as const, 'aria-label': ariaLabel }
+    ? {
+        role: 'status' as const,
+        'aria-live': 'polite' as const,
+        'aria-label': ariaLabel,
+      }
     : { 'aria-hidden': true as const };
 
   if (lines > 1) {
@@ -48,10 +52,6 @@ export function SkeletonText({
   }
 
   return (
-    <span
-      className={baseClass}
-      style={{ width, height }}
-      {...a11yProps}
-    />
+    <span className={baseClass} style={{ width, height }} {...a11yProps} />
   );
 }

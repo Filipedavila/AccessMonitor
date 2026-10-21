@@ -26,6 +26,7 @@
   "scripts": {
     "dev": "vite --mode dev --port 3001",
     "build": "tsc --noEmit && vite build",
+    "build:noenv": "tsc --noEmit && vite build --mode noenv",
     "preview": "vite preview",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",

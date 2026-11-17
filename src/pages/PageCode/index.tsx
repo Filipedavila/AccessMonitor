@@ -2,24 +2,19 @@ import { ButtonsActions } from './_components/buttons-revalidation';
 import './styles.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Breadcrumb, LoadingComponent } from '@a12e/accessmonitor-ds';
-import { processData } from '../../services';
-import { getEvalData } from '../../config/api';
 
 import { useTranslation } from 'react-i18next';
-import { useState, useEffect, type JSX } from 'react';
+import type { JSX } from 'react';
 import { useTheme } from '../../context/ThemeContext';
+import { useFetchData } from '../../hooks/useFetchData';
 
 import { downloadCSV } from '../../utils/utils';
 
-import LZString from 'lz-string';
-
 import { pathURL } from '../../App';
-import { EvaluationResponse, ProcessedDataFull } from '@/types';
 
 interface PageCodeLocationState {
-  content?: ProcessedDataFull | null;
-  original?: EvaluationResponse | null;
-  code?: string | null;
+  contentHtml?: string | null;
+  file?: File | null;
 }
 
 export default function PageCode(): JSX.Element {
@@ -27,95 +22,42 @@ export default function PageCode(): JSX.Element {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const [error, setError] = useState<string | false>(false);
-
-  const [dataProcess, setDataProcess] = useState<ProcessedDataFull | null>(
-    null,
-  );
-  const [loadingProgress, setLoadingProgress] = useState<boolean>(true);
-  const [originalData, setOriginalData] = useState<EvaluationResponse | null>(
-    null,
-  );
-  const [pageCode, setPageCode] = useState<string | undefined>();
-
   const { theme } = useTheme();
   const themeClass = theme === 'light' ? '' : 'dark_mode-code';
 
   const state = location.state as PageCodeLocationState | null;
-  const dataProcessPrev = state?.content ?? null;
-  const originalDataPrev = state?.original ?? null;
-  const code = state?.code ?? null;
+  const contentHtml = state?.contentHtml ?? '';
+  const file = state?.file ?? null;
+
+  const segments = location.pathname.split('/').filter(Boolean);
+  const urlSegment = segments[segments.length - 2] ?? '';
+  const isHtml = urlSegment === 'html';
+  const decodedUrl = isHtml ? '' : decodeURIComponent(urlSegment);
+
+  // Mesma chave que o Resume: o resultado vem da cache; só reavalia (via
+  // SSE) se a página for aberta diretamente.
+  const {
+    dataProcess,
+    loadingProgress,
+    pageCode,
+    error: fetchError,
+  } = useFetchData(isHtml ? 'html' : urlSegment, contentHtml, decodedUrl, file);
+
+  const error = fetchError
+    ? t(`MISC.errors.${fetchError}`, {
+        defaultValue: t('MISC.unexpected_error'),
+      })
+    : false;
 
   const handleGoBack = (): void => {
-    if (!dataProcess?.metadata?.url) {
+    if (isHtml) {
       navigate(`${pathURL}results/html`, {
-        state: { contentHtml: pageCode },
+        state: { contentHtml: pageCode, file },
       });
     } else {
-      const test = location.pathname.split('/');
-      navigate(`${pathURL}results/${test[test.length - 2]}`);
+      navigate(`${pathURL}results/${urlSegment}`);
     }
   };
-
-  useEffect(() => {
-    const fetchData = async (): Promise<void> => {
-      setLoadingProgress(true);
-
-      try {
-        if (dataProcessPrev && originalDataPrev && code) {
-          setOriginalData(originalDataPrev);
-          setDataProcess(dataProcessPrev);
-          setPageCode(code);
-          setLoadingProgress(false);
-          return;
-        }
-        const compressedData = localStorage.getItem('evaluation');
-        const storedData = compressedData
-          ? LZString.decompressFromUTF16(compressedData)
-          : null;
-        const storedUrl = localStorage.getItem('evaluationUrl');
-        const test = location.pathname.split('/');
-        const urlSegment = test[test.length - 2];
-        const currentUrl = decodeURIComponent(urlSegment);
-        if (storedData && storedUrl === currentUrl) {
-          const parsedStoredData = JSON.parse(storedData) as EvaluationResponse;
-          setOriginalData(parsedStoredData);
-          setDataProcess(
-            processData(parsedStoredData.evaluationReport, urlSegment),
-          );
-          setPageCode(
-            parsedStoredData.evaluationReport?.snapshot?.html || 'html',
-          );
-          setLoadingProgress(false);
-          return;
-        }
-        const response = await getEvalData('url', currentUrl);
-        if (!response) {
-          setError(t('MISC.unexpected_error'));
-          setLoadingProgress(false);
-        } else {
-          if (urlSegment !== 'html') {
-            const compressed = LZString.compressToUTF16(
-              JSON.stringify(response),
-            );
-            localStorage.setItem('evaluation', compressed);
-            localStorage.setItem('evaluationUrl', currentUrl);
-          }
-
-          setOriginalData(response);
-          setDataProcess(processData(response.evaluationReport, urlSegment));
-          setPageCode(response.evaluationReport?.snapshot?.html || 'html');
-          setLoadingProgress(false);
-        }
-      } catch (err) {
-        console.error('Erro', err);
-        setLoadingProgress(false);
-        setError(t('MISC.unexpected_error'));
-      }
-    };
-
-    fetchData();
-  }, []);
 
   const dataBreadCrumb = [
     { title: 'AccessMonitor', href: `${pathURL}` },
@@ -154,9 +96,7 @@ export default function PageCode(): JSX.Element {
           </section>
         ) : !error ? (
           <ButtonsActions
-            downloadCSV={() =>
-              downloadCSV(dataProcess, originalData?.evaluationData ?? null, t)
-            }
+            downloadCSV={() => downloadCSV(dataProcess, t)}
             handleGoBack={() => handleGoBack()}
             themeClass={themeClass}
           />

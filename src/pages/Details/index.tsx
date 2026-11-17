@@ -11,11 +11,7 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useFetchData } from '../../hooks/useFetchData';
 
 import { pathURL } from '../../App';
-import type { AssertionEvidenceItem, EvaluationData } from '../../types';
-
-interface DetailsProps {
-  setAllData: (data: EvaluationData) => void;
-}
+import type { AssertionEvidenceItem } from '../../types';
 
 interface RulesetEntry {
   test: string;
@@ -24,7 +20,7 @@ interface RulesetEntry {
 
 const typedRuleset = ruleset as unknown as Record<string, RulesetEntry>;
 
-export default function Details({ setAllData }: DetailsProps): JSX.Element {
+export default function Details(): JSX.Element {
   const location = useLocation();
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -33,8 +29,12 @@ export default function Details({ setAllData }: DetailsProps): JSX.Element {
 
   const [error] = useState<string | false>(false);
 
-  const contentHtml: string | null =
-    (location.state as { contentHtml?: string } | null)?.contentHtml ?? null;
+  const locationState = location.state as {
+    contentHtml?: string;
+    file?: File;
+  } | null;
+  const contentHtml: string | null = locationState?.contentHtml ?? null;
+  const file: File | null = locationState?.file ?? null;
 
   const themeClass = theme === 'light' ? '' : 'dark_mode-details';
 
@@ -47,13 +47,14 @@ export default function Details({ setAllData }: DetailsProps): JSX.Element {
     isHtml ? 'html' : urlSegment,
     contentHtml ?? '',
     decodedUrl,
+    file,
   );
   const url = dataProcess?.metadata?.url;
 
   const handleGoBack = (): void => {
     if (isHtml) {
       navigate(`${pathURL}results/html`, {
-        state: { contentHtml },
+        state: { contentHtml, file },
       });
     } else {
       navigate(`${pathURL}results/${urlSegment}`);
@@ -105,10 +106,8 @@ export default function Details({ setAllData }: DetailsProps): JSX.Element {
   ];
 
   useEffect(() => {
-    if (!originalData?.evaluationData) return;
-    const data = originalData.evaluationData;
-    setAllData(data);
-    const dataReport = originalData.evaluationReport.scoring.assertionEvidence;
+    if (!originalData) return;
+    const dataReport = originalData.scoring?.assertionEvidence;
 
     if (!dataReport) {
       setEvidence([]);
@@ -121,12 +120,10 @@ export default function Details({ setAllData }: DetailsProps): JSX.Element {
       return;
     }
     const items: AssertionEvidenceItem[] = [
-      ...(originalData.evaluationReport?.scoring?.assertionEvidence?.[
-        testKey
-      ] ?? []),
+      ...(originalData.scoring?.assertionEvidence?.[testKey] ?? []),
     ];
     setEvidence(items);
-  }, [originalData, details, testName, setAllData]);
+  }, [originalData, details, testName]);
 
   const verdict = evidence[0]?.verdict;
 

@@ -20,12 +20,10 @@ import Detail from './pages/Details';
 import PageCode from './pages/PageCode';
 import Error from './pages/Error';
 import './i18n';
-import type { EvaluationData } from './types';
 
 export const pathURL: string = import.meta.env.VITE_BASE_URL || '/';
 
 export const App: FC = () => {
-  const [, setAllData] = useState<EvaluationData | null>(null);
   const [, setEle] = useState<string>('');
 
   /* Update year in footer until dynamic year is implemented in design system */
@@ -49,12 +47,12 @@ export const App: FC = () => {
 
               <Route
                 path={`${pathURL}results/:content`}
-                element={<Resume setAllData={setAllData} setEle={setEle} />}
+                element={<Resume setEle={setEle} />}
               />
 
               <Route
                 path={`${pathURL}results/:content/:details`}
-                element={<Detail setAllData={setAllData} />}
+                element={<Detail />}
               />
 
               <Route

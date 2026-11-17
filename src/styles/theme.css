@@ -160,6 +160,12 @@ button {
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
+
+  /* O loader é feedback essencial (fila/avaliação): mantém a animação. */
+  .ama.loadingContainer .dot {
+    animation-duration: 2.6s !important;
+    animation-iteration-count: infinite !important;
+  }
 }
 
 ::selection {

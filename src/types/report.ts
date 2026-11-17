@@ -53,20 +53,8 @@ export interface EvaluationReport {
   readonly scoring: EvaluationReportScoring;
 }
 
-export interface EvaluationData {
-  readonly title: string;
-  readonly score: string;
-  readonly A: number;
-  readonly AA: number;
-  readonly AAA: number;
-  readonly createdAt: string;
-  readonly tagCount: number;
-}
-
-export interface EvaluationResponse {
-  readonly evaluationReport: EvaluationReport;
-  readonly evaluationData: EvaluationData;
-}
+/** Payload do evento SSE `completed` (ex-`evaluationReport`). */
+export type AuditReport = EvaluationReport;
 
 export type Level = 'A' | 'AA' | 'AAA';
 export type TestColor = 'ok' | 'err' | 'war';

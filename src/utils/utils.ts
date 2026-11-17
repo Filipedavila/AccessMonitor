@@ -42,7 +42,7 @@ export function convertBytes(length: number) {
   }
 }
 
-export function downloadCSV(dataProcess: any, originalData: any, t: any) {
+export function downloadCSV(dataProcess: any, t: any) {
   const data = [];
 
   let error, level, desc, num;
@@ -79,7 +79,7 @@ export function downloadCSV(dataProcess: any, originalData: any, t: any) {
       descs.push(desc, error);
       rowData.push(
         dataProcess?.metadata?.url,
-        originalData.date,
+        dataProcess?.metadata?.last_update,
         dataProcess['results'][row]['msg'],
         error,
         level,

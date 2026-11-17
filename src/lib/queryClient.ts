@@ -22,6 +22,8 @@ persistQueryClient({
   queryClient,
   persister,
   maxAge: 30 * 60 * 1000,
+  // Muda sempre que o formato guardado muda (v1: { evaluationReport, evaluationData }).
+  buster: 'sse-v2',
 });
 
 export default queryClient;

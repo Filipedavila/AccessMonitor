@@ -80,6 +80,7 @@
       "file_title": "Select an HTML file",
       "file_name_label": "File name",
       "file_type_error": "Invalid file type",
+      "file_size_error": "The file is empty or exceeds 10 MB.",
       "submit": "Evaluate",
       "messages": {
         "invalid_url": "The given url is invalid or does not exist"
@@ -225,6 +226,18 @@
       "loading": "Loading",
       "required_field": "This field is <strong>required</strong>",
       "message_close": "Close",
+      "cancel": "Cancel",
+      "queue": {
+        "title": "Request waiting in queue",
+        "position": "You are number {{position}} in the queue.",
+        "ahead_one": "There is {{count}} request ahead of you.",
+        "ahead_other": "There are {{count}} requests ahead of you.",
+        "next": "You are next to be evaluated.",
+        "slots": "The server evaluates {{max}} pages at a time ({{active}} in progress).",
+        "hint": "Keep this page open: the evaluation starts automatically when a slot is free.",
+        "evaluating": "Evaluating the page...",
+        "evaluating_hint": "This can take up to 35 seconds."
+      },
       "unexpected_error": "An unexpected error has ocurred. Please try again later.",
       "error_contact": "If the problem persists, please contact us.",
       "go_to_top": "Go to top",
@@ -238,6 +251,11 @@
         "data_table_error": "An error has ocurred when trying to load the data table"
       },
       "errors": {
+        "timeout": "The page took too long to respond. Please try again.",
+        "evaluation_failed": "The page could not be evaluated.",
+        "forbidden": "Request not authorized.",
+        "too_large": "The file exceeds the maximum size of 10 MB.",
+        "rate_limited": "Too many requests. Please wait a moment and try again.",
         "network": "We could not reach the evaluation server. Please check your connection and try again.",
         "parse": "The server response could not be read. Please try again later.",
         "invalid_url": "The given url is invalid or does not exist.",

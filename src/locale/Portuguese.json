@@ -79,6 +79,7 @@
       "file_title": "Escolha um ficheiro HTML",
       "file_name_label": "Nome do ficheiro",
       "file_type_error": "Tipo de ficheiro inválido",
+      "file_size_error": "O ficheiro está vazio ou excede 10 MB.",
       "submit": "Validar",
       "messages": {
         "invalid_url": "O url inserido é inválido ou não existe"
@@ -224,6 +225,18 @@
       "loading": "A carregar...",
       "required_field": "Este campo é <strong>obrigatório</strong>",
       "message_close": "Fechar",
+      "cancel": "Cancelar",
+      "queue": {
+        "title": "Pedido em fila de espera",
+        "position": "É o n.º {{position}} da fila.",
+        "ahead_one": "Há {{count}} pedido à sua frente.",
+        "ahead_other": "Há {{count}} pedidos à sua frente.",
+        "next": "É o próximo a ser avaliado.",
+        "slots": "O servidor avalia {{max}} páginas em simultâneo ({{active}} em curso).",
+        "hint": "Não feche esta página: a avaliação começa automaticamente quando houver vaga.",
+        "evaluating": "A avaliar a página...",
+        "evaluating_hint": "Isto pode demorar até 35 segundos."
+      },
       "unexpected_error": "Ocorreu um erro inesperado. Por favor tente aceder mais tarde.",
       "error_contact": "Se o problema persistir, contacte-nos...",
       "go_to_top": "Ir para o topo",
@@ -237,6 +250,11 @@
         "data_table_error": "Ocorreu um erro ao tentar carregar a tabela de dados"
       },
       "errors": {
+        "timeout": "A página demorou demasiado tempo a responder. Tente novamente.",
+        "evaluation_failed": "Não foi possível avaliar a página.",
+        "forbidden": "Pedido não autorizado.",
+        "too_large": "O ficheiro excede o tamanho máximo de 10 MB.",
+        "rate_limited": "Demasiados pedidos. Aguarde um momento e tente novamente.",
         "network": "Não foi possível contactar o servidor de avaliação. Verifique a sua ligação e tente novamente.",
         "parse": "Não foi possível ler a resposta do servidor. Tente novamente mais tarde.",
         "invalid_url": "O url inserido é inválido ou não existe.",

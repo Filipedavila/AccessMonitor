@@ -10,7 +10,11 @@ import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { useTheme } from '../../../context/ThemeContext';
-import { evaluationQueryKey } from '../../../hooks/useFetchData';
+import {
+  evaluationQueryKey,
+  fileQueryTarget,
+} from '../../../hooks/useFetchData';
+import { MAX_FILE_BYTES } from '../../../config/api';
 
 import { Button, Icon } from '@a12e/accessmonitor-ds';
 
@@ -21,7 +25,8 @@ export function InsertHtmlUpload(): JSX.Element {
   const { theme } = useTheme();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const [file, setFile] = useState<string | null>('');
+  const [file, setFile] = useState<File | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -31,47 +36,32 @@ export function InsertHtmlUpload(): JSX.Element {
     }
   };
 
-  const handleChange = async (
-    event: ChangeEvent<HTMLInputElement>,
-  ): Promise<void> => {
+  // Validação no cliente (o servidor valida de novo): .html e <= 10 MB.
+  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const selected = event.target.files?.[0];
-
-    if (selected && selected.type === 'text/html') {
-      const reader = new FileReader();
-      reader.onload = async () => {
-        const html = reader.result as string;
-        setFile(getDOM(html));
-      };
-      reader.readAsText(selected);
-    } else {
+    if (!selected) {
       setFile(null);
+      setError(null);
+    } else if (!/\.html?$/i.test(selected.name)) {
+      setFile(null);
+      setError(t('HOME_PAGE.file_type_error'));
+    } else if (selected.size === 0 || selected.size > MAX_FILE_BYTES) {
+      setFile(null);
+      setError(t('HOME_PAGE.file_size_error'));
+    } else {
+      setFile(selected);
+      setError(null);
     }
   };
 
-  async function handleSubmit(
-    event: FormEvent<HTMLFormElement>,
-  ): Promise<void> {
+  function handleSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
-    try {
-      const type = 'html';
-      if (file) {
-        void queryClient.removeQueries({
-          queryKey: evaluationQueryKey('html', file),
-        });
-      }
-      navigate(`${pathURL}results/${type}`, {
-        state: { contentHtml: file },
-      });
-    } catch (error) {
-      console.log('Erro', error);
-    }
+    if (!file) return;
+    void queryClient.removeQueries({
+      queryKey: evaluationQueryKey('html', fileQueryTarget(file)),
+    });
+    navigate(`${pathURL}results/html`, { state: { file } });
   }
-
-  const getDOM = (content: string): string => {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(content, 'text/html');
-    return doc.documentElement.outerHTML;
-  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -92,9 +82,17 @@ export function InsertHtmlUpload(): JSX.Element {
             type="file"
             className="form-control"
             aria-label="Upload"
+            accept=".html,.htm,text/html"
+            aria-invalid={error ? true : undefined}
+            aria-describedby={error ? 'escrever_ficheiro_erro' : undefined}
             onChange={handleChange}
           />
         </div>
+        {error && (
+          <p id="escrever_ficheiro_erro" role="alert">
+            {error}
+          </p>
+        )}
       </div>
 
       <Button

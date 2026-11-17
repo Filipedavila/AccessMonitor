@@ -2,12 +2,12 @@ import { useEffect, useState, type JSX } from 'react';
 import {
   Breadcrumb,
   Gauge,
-  LoadingComponent,
   StatsTable,
   TableComponent,
 } from '@a12e/accessmonitor-ds';
 
 import { useFetchData } from '../../hooks/useFetchData';
+import { QueueStatus } from './_components/queue-status';
 import { ButtonsActions } from './_components/buttons-revalidation';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
@@ -18,21 +18,24 @@ import { optionForAccordion, callbackImgT } from './utils';
 import './styles.css';
 
 import { pathURL } from '../../App';
-import type { EvaluationData, EvaluationResponse } from '../../types';
+import type { AuditReport } from '../../types';
 
 interface ResumeProps {
-  setAllData: (data: EvaluationData) => void;
   setEle: (ele: string) => void;
 }
 
-export default function Resume({ setAllData }: ResumeProps): JSX.Element {
+export default function Resume(_props: ResumeProps): JSX.Element {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
 
   const [error, setError] = useState<string | false>(false);
-  const contentHtml: string | null =
-    (location.state as { contentHtml?: string } | null)?.contentHtml ?? null;
+  const locationState = location.state as {
+    contentHtml?: string;
+    file?: File;
+  } | null;
+  const contentHtml: string | null = locationState?.contentHtml ?? null;
+  const file: File | null = locationState?.file ?? null;
   const { content } = useParams<{ content: string }>();
 
   const { theme } = useTheme();
@@ -41,22 +44,28 @@ export default function Resume({ setAllData }: ResumeProps): JSX.Element {
   const {
     dataProcess,
     loadingProgress,
+    evaluation,
     originalData,
     pageCode,
     error: fetchError,
     invalidate,
-  } = useFetchData(content, contentHtml ?? '', content ?? '');
+    cancel,
+  } = useFetchData(content, contentHtml ?? '', content ?? '', file);
 
   useEffect(() => {
     setError(fetchError ?? false);
   }, [fetchError]);
 
-  const elementCounter =
-    originalData?.evaluationReport?.telemetry?.totalHtmlTags ?? 0;
+  const elementCounter = originalData?.telemetry?.totalHtmlTags ?? 0;
 
   const reRequest = async (): Promise<void> => {
     setError(false);
     await invalidate();
+  };
+
+  const cancelEvaluation = async (): Promise<void> => {
+    await cancel();
+    navigate(`${pathURL}`);
   };
 
   const seeCode = (): void => {
@@ -66,17 +75,15 @@ export default function Resume({ setAllData }: ResumeProps): JSX.Element {
         content: dataProcess,
         original: originalData,
         code: pageCode,
+        contentHtml,
+        file,
       },
     });
   };
 
-  function setAllDataResult(
-    ele: string,
-    allData: EvaluationResponse | null,
-  ): void {
-    if (!allData) return;
-    setAllData(allData.evaluationData);
-    const rawUrl = allData.evaluationReport?.metadata?.url ?? '';
+  function setAllDataResult(ele: string, report: AuditReport | null): void {
+    if (!report) return;
+    const rawUrl = report.metadata?.url ?? '';
 
     if (content === 'html') {
       if (ele.startsWith('http://') || ele.startsWith('https://')) {
@@ -126,18 +133,17 @@ export default function Resume({ setAllData }: ResumeProps): JSX.Element {
         <h1 className="report_container_subtitle">{t('RESULTS.title')}</h1>
         {loadingProgress ? (
           <section className={`loading_container bg-white`}>
-            <LoadingComponent
-              loadingText={t('MISC.loading')}
-              darkTheme={theme}
+            <QueueStatus
+              evaluation={evaluation}
+              theme={theme}
+              onCancel={() => void cancelEvaluation()}
             />
           </section>
         ) : !error ? (
           <ButtonsActions
             reRequest={() => void reRequest()}
             seeCode={seeCode}
-            downloadCSV={() =>
-              downloadCSV(dataProcess, originalData?.evaluationData ?? null, t)
-            }
+            downloadCSV={() => downloadCSV(dataProcess, t)}
             href={dataProcess?.metadata?.url}
             themeClass={themeClass}
           />
